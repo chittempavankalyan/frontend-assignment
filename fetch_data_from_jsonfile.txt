@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>JSON Table Example</title>
+  <style>
+    /* Table styles */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>JSON Table Example</h1>
+  <div id="table-container"></div>
+
+  <script>
+    // Load JSON data from file
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
+        // Create table element
+        const table = document.createElement('table');
+
+        // Create header row
+        const headerRow = document.createElement('tr');
+        for (const key in data[0]) {
+          const headerCell = document.createElement('th');
+          headerCell.textContent = key;
+          headerRow.appendChild(headerCell);
+        }
+        table.appendChild(headerRow);
+
+        // Create data rows
+        for (const object of data) {
+          const dataRow = document.createElement('tr');
+          for (const key in object) {
+            const dataCell = document.createElement('td');
+            dataCell.textContent = object[key];
+            dataRow.appendChild(dataCell);
+          }
+          table.appendChild(dataRow);
+        }
+
+        // Add table to page
+        document.getElementById('table-container').appendChild(table);
+      })
+      .catch(error => console.error(error));
+  </script>
+</body>
+</html>
+
