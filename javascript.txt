@@ -1,0 +1,37 @@
+var rowsPerPage = 3;
+var currentPage = 1;
+
+function showPage(page) {
+  var tableRows = document.getElementsByTagName("tr");
+  var startRow = (page - 1) * rowsPerPage + 1;
+  var endRow = startRow + rowsPerPage - 1;
+  for (var i = 1; i < tableRows.length; i++) {
+    if (i < startRow || i > endRow) {
+      tableRows[i].style.display = "none";
+    } else {
+      tableRows[i].style.display = "";
+    }
+  }
+  currentPage = page;
+  updateURL();
+}
+
+function updateURL() {
+  var url = window.location.href.split("?")[0] + "?page=" + currentPage + "&rows=" + rowsPerPage;
+  window.history.pushState({path: url}, "", url);
+}
+
+window.onload = function() {
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has("page")) {
+    currentPage = parseInt(urlParams.get("page"));
+  }
+  if (urlParams.has("rows")) {
+    rowsPerPage = parseInt(urlParams.get("rows"));
+  }
+  showPage(currentPage);
+}
+
+function createPagination() {
+  var table = document.getElementsByTagName("table")[0
+
